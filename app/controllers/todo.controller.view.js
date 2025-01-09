@@ -4,100 +4,92 @@
 ------------------------------------------------------- */
 //* CONTROLLERS:
 
-const Todo = require("../models/todo.model.api");
+const Todo = require('../models/todo.model')
+
+const PRIORITIES = {
+    '-1': 'low',
+    '0': 'Normal',
+    '1': 'High'
+}
 
 module.exports = {
-  list: async (req, res) => {
-    // const data = await Todo.findAll()
-    // const data = await Todo.findAll({
-    //     attributes: ['title', 'description', 'priority'], // Select Fields
-    //     where: { priority: -1 } // Filters
-    // })
-    const data = await Todo.findAndCountAll();
 
-    res.status(200).send({
-      error: false,
-      result: data,
-    });
-  },
+    list: async (req, res) => {
 
-  // CRUD ->
 
-  create: async (req, res) => {
-    // const receivedData = req.body
+        const data = await Todo.findAndCountAll()
 
-    // const data = await Todo.create({
-    //     title: receivedData.title,
-    //     description: receivedData.description,
-    //     priority: receivedData.priority,
-    //     isDone: receivedData.isDone
-    // })
-    const data = await Todo.create(req.body);
+        res.render('index', { todos: data.rows, count: data.count, priorities: PRIORITIES })
 
-    res.status(201).send({
-      error: false,
-      result: data,
-    });
-  },
 
-  read: async (req, res) => {
-    // const data = await Todo.findOne({ where: { id: req.params.id } })
-    const data = await Todo.findByPk(req.params.id);
+    },
 
-    res.status(200).send({
-      error: false,
-      result: data,
-    });
-  },
+    // CRUD ->
 
-  update: async (req, res) => {
-    // const data = await Todo.update({ ...newData }, { ...where })
-    const data = await Todo.update(req.body, { where: { id: req.params.id } });
-    // upsert: kayıt varsa güncelle, yoksa ekle
+    create: async (req, res) => {
 
-    // res.status(202).send({
-    //     error: false,
-    //     result: data, // kaç adet güncellendi bilgisi döner.
-    //     message: 'Updated',
-    //     new: await Todo.findByPk(req.params.id)
-    // })
+        if (req.method === 'POST') {
 
-    res.status(202).send({
-      error: false,
-      result: await Todo.findByPk(req.params.id),
-      message: "Updated",
-      count: data,
-    });
-  },
+            const data = await Todo.create(req.body)
 
-  delete: async (req, res) => {
-    // const data = await Todo.destroy({ ...where })
-    const data = await Todo.destroy({ where: { id: req.params.id } });
+            if (data) res.redirect('/view')
 
-    // 204: No Content -> İçerik vermeyebilir.
-    // res.status(204).send({
-    //     error: false,
-    //     message: 'Deleted',
-    //     count: data
-    // })
 
-    if (data > 0) {
-      // kayıt silindiyse...
+        } else {
+            res.render('todoCreate', { priorities: PRIORITIES })
+        }
+    },
 
-      res.sendStatus(204);
-    } else {
-      // silinemediyse...
+    read: async (req, res) => {
 
-      // res.status(404).send({
-      //     error: true,
-      //     message: 'Can not Deleted. (Maybe Already deleted)'
-      // })
+        const data = await Todo.findByPk(req.params.id)
 
-      // send to ErrorHandler:
-      res.errorStatusCode = 404;
-      throw new Error("Can not Deleted. (Maybe Already deleted)");
-    }
-  },
-};
+        res.render('todoRead', { todo: data, priorities: PRIORITIES })
+
+    },
+
+    update: async (req, res) => {
+
+
+        if (req.method === 'POST') {
+
+            const data = await Todo.update(req.body, { where: { id: req.params.id } })
+
+            if (data) res.redirect('/view')
+
+        } else {
+
+            const data = await Todo.findByPk(req.params.id)
+
+            res.render('todoUpdate', { todo: data, priorities: PRIORITIES })
+        }
+
+
+
+    },
+
+    delete: async (req, res) => {
+
+        //todo -> cancel yapildiginda datayi silmesini nasil engelleriz ?
+
+        const data = await Todo.destroy({ where: { id: req.params.id } })
+
+
+        if (data > 0) { // kayıt silindiyse...
+
+            res.redirect('/view')
+
+        } else { // silinemediyse...
+
+
+            // send to ErrorHandler:
+            res.errorStatusCode = 404
+            throw new Error('Can not Deleted. (Maybe Already deleted)')
+
+        }
+
+    },
+
+}
 
 /* ------------------------------------------------------- */

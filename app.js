@@ -21,25 +21,19 @@ app.use(express.json())
 // express-async-errors: catch async-errors and send to errorHandler:
 require('express-async-errors')
 
-
-
 /* ------------------------------------------------------- */
-
-
 
 app.set("view engine","ejs")
 /* ------------------------------------------------------- */
-
-
 //* Routes:
 
 app.all("/",(req,res)=>{
 
-    res.render("index.ejs")
-    // res.send({
-    //     error:false,
-    //     message:"Welcome to TodoAPI",
-    // })
+    // res.render("index.ejs")
+    res.send({
+        error:false,
+        message:"Welcome to TodoAPI",
+    })
 })
 
 app.use('/todos', require('./app/routes/todo.router'))

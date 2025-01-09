@@ -31,18 +31,15 @@ app.set("view engine","ejs")
 /* ------------------------------------------------------- */
 
 
-
-
-
-
-
 //* Routes:
 
 app.all("/",(req,res)=>{
-    res.send({
-        error:false,
-        message:"Welcome to TodoAPI",
-    })
+
+    res.render("index.ejs")
+    // res.send({
+    //     error:false,
+    //     message:"Welcome to TodoAPI",
+    // })
 })
 
 app.use('/todos', require('./app/routes/todo.router'))

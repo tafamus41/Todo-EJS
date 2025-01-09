@@ -5,14 +5,14 @@
 //* ROUTERS:
 
 // const router = express.Router()
-const router = require("express").Router();
+const router = require('express').Router()
 
 // Call todo.controller:
-const todo = require("../controllers/todo.controller.api");
+const todo = require('../controllers/todo.controller.api')
 
 // // LIST TODOS:
 // router.get('/', todo.list)
-// //? CRUD ->
+// //? CRUD -> 
 // // CREATE TODO:
 // router.post('/', todo.create)
 // // READ TODO:
@@ -33,5 +33,5 @@ router.route('/:id')
     .delete(todo.delete)
 
 // Export:
-module.exports = router;
+module.exports = router
 /* ------------------------------------------------------- */

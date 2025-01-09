@@ -68,7 +68,7 @@ const Todo = sequelize.define('todos', {
 
 //* Syncronization:
 //? Model'i veritabanına uygula:
-// sequelize.sync() // CREATE TABLE (ilk uygulama)
+sequelize.sync() // CREATE TABLE (ilk uygulama)
 // sequelize.sync({ force: true }) // DROP TABLE & CREATE TABLE (Dikkat! Data var ise silinir.)
 // sequelize.sync({ alter: true }) // TO BACKUP & DROP TABLE & CREATE TABLE & FROM BACKUP 
 //! sync() methodu 1 kere uygulanır ((modelde değişiklik var ise tekrar uygulanır.)

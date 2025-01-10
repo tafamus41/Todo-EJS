@@ -73,7 +73,7 @@ module.exports = {
         //todo -> cancel yapildiginda datayi silmesini nasil engelleriz ?
 
         const data = await Todo.destroy({ where: { id: req.params.id } })
-
+        
 
         if (data > 0) { // kayıt silindiyse...
 

@@ -29,7 +29,7 @@ module.exports = {
     create: async (req, res) => {
     
         // const receivedData = req.body
-        // console.log(receivedData)
+        
     
         // const data = await Todo.create({
         //     title: receivedData.title,
@@ -48,7 +48,7 @@ module.exports = {
 
     read: async (req, res) => {
 
-        // console.log(req.params.id)
+    
     
         // const data = await Todo.findOne({ where: { id: req.params.id } })
         const data = await Todo.findByPk(req.params.id)

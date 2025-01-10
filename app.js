@@ -31,7 +31,7 @@ app.set("views","./public")
 app.all("/",(req,res)=>{
 
     // res.render('index.ejs')
-    res.send(`
+    res.end(`
         <p><a href="/view">Todo Template</a></p>
         <p><a href="/api">Todo RestAPI</a></p>
         `)

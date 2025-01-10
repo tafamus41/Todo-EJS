@@ -44,12 +44,22 @@ app.use('/api', require('./app/routes/todo.router.api'))
 /* ------------------------------------------------------- */
 const errorHandler = (err, req, res, next) => {
     const errorStatusCode = res.errorStatusCode ?? 500
-    res.status(errorStatusCode).send({
+
+    const data = {
         error: true, // special data
         message: err.message, // error string message
         cause: err.cause, // error option cause
         // stack: err.stack, // error details
-    })
+    }
+
+    if (req.originalUrl.startsWith('/api')) {
+        console.log('errorHandler worked.')
+        res.status(errorStatusCode).send(data)
+    } else {
+        res.render('error', { data })
+    }
+
+
 }
 app.use(errorHandler)
 /* ------------------------------------------------------- */

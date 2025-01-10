@@ -42,7 +42,7 @@
                             <td>
                                 <a href="/view/<%= todo.id %>" class="btn btn-sm btn-secondary">Read</a>
                                 <a href="/view/<%= todo.id %>/update" class="btn btn-sm btn-primary">Update</a>
-                                <a  href="/view/<%= todo.id %>/delete" class="btn btn-sm btn-danger" onclick="confirm('Are you sure about this?')">Delete</a>
+                                <a  href="/view/<%= todo.id %>/delete" class="btn btn-sm btn-danger" onclick=" return confirmDelete()">Delete</a>
                                 
                             </td>
                         </tr>
@@ -51,6 +51,12 @@
             </table>
         </div>
     </div>
+    <script>
+        function confirmDelete() {
+            let userResponse = confirm("Are you sure about this?");
+            return userResponse; // Returns true to proceed, false to cancel
+        }
+    </script>
 </body>
 
 </html>

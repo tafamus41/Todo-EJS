@@ -9,20 +9,8 @@ const router = require('express').Router()
 const todo = require('../controllers/todo.controller.view')
 
 // //? CRUD ->
-/* ------------------------------------------------------- *
-
-router.route('/')
-    .get(todo.list)
-    .post(todo.create)
-
-router.route('/:id')
-    .get(todo.read)
-    .put(todo.update) // Tam data güncellemesi
-    .patch(todo.update) // Kısmi data güncellemesi
-    .delete(todo.delete)
-
-// Export:
 /* ------------------------------------------------------- */
+
 
 router.get('/', todo.list)
 
